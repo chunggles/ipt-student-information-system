@@ -9,6 +9,7 @@ function Users(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [users, setUsers] = useState([]);
+    const [editIndex, setEditIndex] = useState(null);
 
         function fetchUsers() {
             axios
@@ -44,15 +45,81 @@ function Users(){
             console.error(error);
             }
         }
-            
-    return(
+
+        function handleEdit(user, index) {
+            setName(user.name);
+            setEmail(user.email);
+            setPassword(user.password);
+            setEditIndex(index);
+        }
+
+
+        async function handleUpdateUser() {
+
+            try {
+
+            await axios.put(`http://localhost:1337/edit-user/${editIndex}`, {
+                name: name,
+                email: email,
+                password: password
+            });
+
+            alert("User updated!");
+
+            fetchUsers();
+
+            setName("");
+            setEmail("");
+            setPassword("");
+
+            setEditIndex(null);
+
+            } catch (error) {
+            console.error(error);
+            }
+        }
+
+        async function handleDelete(index) {
+            const confirmDelete = window.confirm("Are you sure you want to delete this user?");
+            if (!confirmDelete) {
+                return;
+            }
+            try {
+                await axios.delete(`http://localhost:1337/delete-user/${index}`);
+                alert("User deleted!");
+                fetchUsers();
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+
+    return (
         <div className = "users-container">
             <div>
                 <h1>Users</h1>
                 <TextField name="Name" variant="outlined" label="Name" value= {name} onChange={(e) => setName(e.target.value)} />
                 <TextField name="Email" variant="outlined" label="Email" value= {email} onChange={(e) => setEmail(e.target.value)} />
                 <TextField name="Password" type= "password" variant="outlined" label="Password " value= {password} onChange={(e) => setPassword(e.target.value)} />
-                <Button variant = "contained" onClick={handleAddUser}>Add User</Button>
+                {editIndex === null ? (
+
+                <Button
+                variant="contained"
+                color="primary"
+                onClick={handleAddUser}>
+                Add User
+                </Button>
+                ) : (
+
+                <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleUpdateUser}
+                >
+                Update User
+                </Button>
+
+                 )}
 
                 <h2>User List</h2>
                 <Table>
@@ -67,6 +134,10 @@ function Users(){
                                 <TableCell>{user.name}</TableCell>
                                 <TableCell>{user.email}</TableCell>
                                 <TableCell>{user.password}</TableCell>
+                                <TableCell>
+                                    <Button variant="outlined" onClick={() => handleEdit(user, index)}>Edit</Button>
+                                    <Button variant="outlined" color="secondary" onClick={() => handleDelete(index)}>Delete</Button>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody> 
@@ -78,3 +149,4 @@ function Users(){
 }
 
 export default Users;
+

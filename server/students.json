@@ -1,82 +1,42 @@
 [
   {
     "idNumber": "40655230",
-    "firstName": "Sam",
-    "lastName": "Marq",
+    "firstName": "Samson",
+    "lastName": "Marquez",
+    "middleName": "Labasan",
+    "course": "BSIT",
+    "yearLevel": "3"
+  },
+  {
+    "idNumber": "41273230",
+    "firstName": "Dwight Lloyd",
+    "lastName": "Somera",
+    "middleName": "M",
+    "course": "BSIT",
+    "yearLevel": "3"
+  },
+  {
+    "idNumber": "40371230",
+    "firstName": "Cleverson",
+    "lastName": "Marzan",
     "middleName": "L",
     "course": "BSIT",
     "yearLevel": "3"
   },
   {
-    "idNumber": "3",
-    "firstName": "DSA",
-    "lastName": "DAS",
-    "middleName": "DSA",
-    "course": "DSA",
+    "idNumber": "40994230",
+    "firstName": "Benson James ",
+    "lastName": "Lacambra ",
+    "middleName": "L",
+    "course": "BSIT",
     "yearLevel": "3"
   },
   {
-    "idNumber": "432",
-    "firstName": "DS",
-    "lastName": "DS",
-    "middleName": "DSA",
-    "course": "DSA",
-    "yearLevel": "54"
-  },
-  {
-    "idNumber": "3",
-    "firstName": "DSA",
-    "lastName": "DSA",
-    "middleName": "DAS",
-    "course": "ADASFAS",
+    "idNumber": "40655240",
+    "firstName": "Makazee",
+    "lastName": "Navi",
+    "middleName": "V",
+    "course": "BSCS",
     "yearLevel": "3"
-  },
-  {
-    "idNumber": "12",
-    "firstName": "sam",
-    "lastName": "mas",
-    "middleName": "l",
-    "course": "bsit",
-    "yearLevel": "3"
-  },
-  {
-    "idNumber": "43",
-    "firstName": "fds",
-    "lastName": "fds",
-    "middleName": "fsd",
-    "course": "fds",
-    "yearLevel": "43"
-  },
-  {
-    "idNumber": "43",
-    "firstName": "fd",
-    "lastName": "fds",
-    "middleName": "fds",
-    "course": "fds",
-    "yearLevel": "432"
-  },
-  {
-    "idNumber": "40655230",
-    "firstName": "sam",
-    "lastName": "masdff",
-    "middleName": "l",
-    "course": "bsit",
-    "yearLevel": "3"
-  },
-  {
-    "idNumber": "43",
-    "firstName": "fds",
-    "lastName": "fds",
-    "middleName": "fsd",
-    "course": "fds",
-    "yearLevel": "43"
-  },
-  {
-    "idNumber": "432",
-    "firstName": "fds",
-    "lastName": "fds",
-    "middleName": "fds",
-    "course": "fds",
-    "yearLevel": "43"
   }
 ]

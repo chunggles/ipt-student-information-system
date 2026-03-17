@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import './AddStudents.css'
-import {TextField, Button, TableCell, TableRow, TableBody, Table} from '@mui/material';
+import {TextField, Button, TableCell, TableRow, TableBody, Table, Tab} from '@mui/material';
 import { useEffect } from 'react';
 
 function AddStudents() {
@@ -14,6 +14,7 @@ function AddStudents() {
     const [course, setCourse] = useState('')
     const [yearLevel, setYearLevel] = useState('')
     const [students, setStudents] = useState([]);
+    const [editIndex, setEditIndex] = useState(null);
 
         function fetchStudents() {
             axios
@@ -65,6 +66,60 @@ function AddStudents() {
             yearLevel,
         })
     }
+
+    function handleEdit(student, index) {
+            setIdNumber(student.idNumber);
+            setFirstName(student.firstName);
+            setLastName(student.lastName);
+            setMiddleName(student.middleName);
+            setCourse(student.course);
+            setYearLevel(student.yearLevel);
+            setEditIndex(index);
+        }
+
+
+        async function handleUpdateStudent() {
+
+            try {
+
+            await axios.put(`http://localhost:1337/edit-student/${editIndex}`, {
+                idNumber: idNumber,
+                firstName: firstName,
+                lastName: lastName,
+                middleName: middleName,
+                course: course,
+                yearLevel: yearLevel
+            });
+
+            alert("Student updated!");
+            fetchStudents();
+            setIdNumber('');
+            setFirstName('');
+            setLastName('');
+            setMiddleName('');
+            setCourse('');
+            setYearLevel('');
+            setEditIndex(null);
+
+            } catch (error) {
+            console.error(error);
+            }
+        }
+
+        async function handleDelete(student, index) {
+            const confirmDelete = window.confirm("Are you sure you want to delete this student?");
+            if (!confirmDelete) {
+                return;
+            }
+            
+            try {
+                await axios.delete(`http://localhost:1337/delete-student/${index}`);
+                alert("Student deleted!");
+                fetchStudents();
+            } catch (error) {
+                console.error(error);
+            }
+        }
 
     const handleNumberChange = (setter) => (e) => {
         const sanitized = e.target.value.replace(/\D+/g, '')
@@ -136,9 +191,23 @@ function AddStudents() {
                             Show Preview
                         </Button>
 
-                        <Button className="add-btn" variant="contained" size="large" onClick={handleAddUser}>
-                            Add Student
+                        {editIndex === null ? (
+                        <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleAddUser}>
+                        Add User
                         </Button>
+                        ) : (
+
+                        <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={handleUpdateStudent}
+                        >
+                        Update User
+                        </Button>
+                        )}
  
                     </div>  
 
@@ -195,6 +264,12 @@ function AddStudents() {
                                         <TableCell>{student.middleName}</TableCell>
                                         <TableCell>{student.course}</TableCell>
                                         <TableCell>{student.yearLevel}</TableCell>
+                                        <TableCell>
+                                            <Button variant="outlined" onClick={() => handleEdit(student, index)}>Edit</Button>                                           
+                                        </TableCell>
+                                        <TableCell>
+                                            <Button variant="outlined" color = "secondary" onClick={() => handleDelete(student, index)}>Delete</Button>
+                                        </TableCell>
                                     </TableRow>
                                     ))}
                                 </TableBody>

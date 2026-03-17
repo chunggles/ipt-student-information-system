@@ -60,6 +60,62 @@ app.get("/users", (req, res) => {
     });
 });
 
+//EDIT USERS
+app.put("/edit-user/:index", (req, res) => {
+    const index = req.params.index;
+    const updatedUser = req.body;
+
+    fs.readFile("data.json", "utf8", (err, data) => {
+        if (err) {
+            return res.status(500).send("Error reading file");
+        }
+
+        const users = JSON.parse(data);
+        
+        if (users[index] === undefined) {
+            return res.status(404).send("User not found");
+        }
+
+        users[index] = updatedUser;
+
+        fs.writeFile("data.json", JSON.stringify(users, null, 2), (err) => {
+            if (err) {
+                return res.status(500).send("Error writing file");
+            }
+
+            res.send("User updated successfully");
+        });
+    });
+});
+
+//DELETE USERS
+app.delete("/delete-user/:index", (req, res) => {
+    const index = req.params.index;
+
+    fs.readFile("data.json", "utf8", (err, data) => {
+        if (err) {
+            return res.status(500).send("Error reading file");
+        }
+
+        const users = JSON.parse(data);
+
+        if (users[index] === undefined) {
+            return res.status(404).send("User not found");
+        }
+
+        users.splice(index, 1);
+
+        fs.writeFile("data.json", JSON.stringify(users, null, 2), (err) => {
+            if (err) {
+                return res.status(500).send("Error writing file");
+            }
+
+            res.send("User deleted successfully");
+        });
+    });
+});
+
+
 //ADD STUDENT
 app.post("/add-student", (req, res) => {
     const newUser = req.body;
@@ -90,8 +146,61 @@ app.get("/students", (req, res) => {
     });
 });
 
+//EDIT STUDENTS
+app.put("/edit-student/:index", (req, res) => {
+    const index = req.params.index;
+    const updatedStudent = req.body;
 
+    fs.readFile("students.json", "utf8", (err, data) => {
+        if (err) {
+            return res.status(500).send("Error reading file");
+        }
 
+        const students = JSON.parse(data);
+        
+        if (students[index] === undefined) {
+            return res.status(404).send("Student not found");
+        }
+
+        students[index] = updatedStudent;
+
+        fs.writeFile("students.json", JSON.stringify(students, null, 2), (err) => {
+            if (err) {
+                return res.status(500).send("Error writing file");
+            }
+
+            res.send("Student updated successfully");
+        });
+    });
+});
+
+//DELETE STUDENTS
+app.delete("/delete-student/:index", (req, res) => {
+    const index = req.params.index;
+
+    fs.readFile("students.json", "utf8", (err, data) => {
+        if (err) {
+            return res.status(500).send("Error reading file");
+        }
+
+        const students = JSON.parse(data);
+
+        if (students[index] === undefined) {
+            return res.status(404).send("Student not found");
+        }
+
+        students.splice(index, 1);
+
+        fs.writeFile("students.json", JSON.stringify(students, null, 2), (err) => {
+            if (err) {
+                return res.status(500).send("Error writing file");
+            }
+
+            res.send("Student deleted successfully");
+        });
+    });
+});
+      
 
 //PORT
 const port = 1337;
